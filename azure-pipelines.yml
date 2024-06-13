@@ -1,0 +1,62 @@
+
+
+variables:
+  - group: gbproto
+
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+
+stages:
+  - stage: Validate
+    jobs:
+      - job: Terraform_PLAN
+        displayName: Terraform PLAN 
+        steps:
+        - task: TerraformTaskV2@2
+          displayName: "Terraform : INIT"
+          inputs:
+            provider: 'azurerm'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+            command: 'init'
+            backendServiceArm: $(backend_sp)
+            backendAzureRmResourceGroupName: $(backend_rg)
+            backendAzureRmStorageAccountName: $(backend_sa)
+            backendAzureRmContainerName: $(backend_container)
+            backendAzureRmKey: $(backend_state)
+
+        - task: TerraformTaskV2@2
+          displayName: "Terraform : PLAN"
+          inputs:
+            provider: 'azurerm'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+            command: 'plan'
+            commandOptions: "-out=$(System.DefaultWorkingDirectory)/terraform.tfplan -detailed-exitcode "
+            environmentServiceNameAzureRM: $(backend_sp)
+        
+
+  - stage: Apply
+    jobs:
+    - job: Terraform_APPLY
+      displayName: Terraform APPLY      
+      steps:
+        - task: TerraformTaskV2@2
+          displayName: "Terraform : INIT"
+          inputs:
+            provider: 'azurerm'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+            command: 'init'
+            backendServiceArm: $(backend_sp)
+            backendAzureRmResourceGroupName: $(backend_rg)
+            backendAzureRmStorageAccountName: $(backend_sa)
+            backendAzureRmContainerName: $(backend_container)
+            backendAzureRmKey: $(backend_state)
+        - task: TerraformTaskV2@2
+          displayName: "Terraform : APPLY"
+          inputs:
+            provider: 'azurerm'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+            command: 'apply'
+            environmentServiceNameAzureRM: $(backend_sp)
