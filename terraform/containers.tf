@@ -1,7 +1,7 @@
 resource "azurerm_container_group" "backend" {
   name                = "backend"
-  location            = "test-rg"
-  resource_group_name = "eastus"
+  location            = "eastus"
+  resource_group_name = "test-rg"
   ip_address_type     = "Private"
   subnet_ids          = [azurerm_subnet.subnet.id]
   os_type             = "Linux"

@@ -1,7 +1,7 @@
 resource "azurerm_storage_account" "frontend" {
   name                     = "hktfrontend"
-  resource_group_name      = "eastus"
-  location                 = "test-rg"
+  resource_group_name      = "test-rg"
+  location                 = "eastus"
   account_tier             = "Standard"
   account_replication_type = "LRS"
   
