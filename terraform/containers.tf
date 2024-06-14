@@ -7,9 +7,9 @@ resource "azurerm_container_group" "backend" {
   os_type             = "Linux"
 
   image_registry_credential {
-    server   = var.acr_url
-    username = var.acr_username
-    password = var.acr_password
+    server   = "jkasn"
+    username = "hhhbh"
+    password = "gfsjgaj"
   }
 
   container {
