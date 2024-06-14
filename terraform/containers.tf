@@ -1,7 +1,7 @@
 resource "azurerm_container_group" "backend" {
   name                = "backend"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = "test-rg"
+  resource_group_name = "eastus"
   ip_address_type     = "Private"
   subnet_ids          = [azurerm_subnet.subnet.id]
   os_type             = "Linux"
@@ -53,7 +53,7 @@ resource "azurerm_container_group" "backend" {
 resource "azurerm_private_dns_a_record" "backend" {
   name                = "backend"
   zone_name           = azurerm_private_dns_zone.hktype.name
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = "test-rg"
   ttl                 = 300
   records             = [azurerm_container_group.backend.ip_address]
 }

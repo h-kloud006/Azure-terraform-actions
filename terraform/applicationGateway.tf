@@ -10,8 +10,8 @@ locals {
 
 resource "azurerm_public_ip" "hk" {
   name                = "hk-pip"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = "test-rg"
+  location            = "eastus"
   allocation_method   = "Static"
   sku                 = "Standard"
   domain_name_label   = "hktype"
@@ -19,8 +19,8 @@ resource "azurerm_public_ip" "hk" {
 
 resource "azurerm_application_gateway" "hk" {
   name                = "hk-appgateway"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = "eastus"
+  location            = "eastus"
 
   sku {
     name     = "Standard_v2"
