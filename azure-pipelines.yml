@@ -40,7 +40,6 @@ stages:
   - stage: Apply
     jobs:
     - job: Terraform_APPLY
-      environment: Approval
       displayName: Terraform APPLY      
       steps:
         - task: TerraformTaskV2@2
