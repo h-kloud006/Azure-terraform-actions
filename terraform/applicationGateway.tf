@@ -19,7 +19,7 @@ resource "azurerm_public_ip" "hk" {
 
 resource "azurerm_application_gateway" "hk" {
   name                = "hk-appgateway"
-  resource_group_name = "eastus"
+  resource_group_name = "test-rg"
   location            = "eastus"
 
   sku {
