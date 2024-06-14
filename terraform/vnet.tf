@@ -50,14 +50,14 @@ resource "azurerm_private_dns_zone_virtual_network_link" "openai" {
   virtual_network_id    = azurerm_virtual_network.vnet.id
 }
 
-resource "azurerm_private_dns_zone" "gbprototype" {
-  name                = "latest.gbprototype.com"
+resource "azurerm_private_dns_zone" "hktype" {
+  name                = "latest.hktype.com"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
-resource "azurerm_private_dns_zone_virtual_network_link" "gbprototype" {
-  name                  = "gbprototype-link"
+resource "azurerm_private_dns_zone_virtual_network_link" "hktype" {
+  name                  = "hktype-link"
   resource_group_name   = azurerm_resource_group.rg.name
-  private_dns_zone_name = azurerm_private_dns_zone.gbprototype.name
+  private_dns_zone_name = azurerm_private_dns_zone.hktype.name
   virtual_network_id    = azurerm_virtual_network.vnet.id
 }

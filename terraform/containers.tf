@@ -29,7 +29,7 @@ resource "azurerm_container_group" "backend" {
   
   container {
     name   = "backend"
-    image  = "${var.acr_url}/gbprototype/backend:latest"
+    image  = "${var.acr_url}/hktype/backend:latest"
     cpu    = 1
     memory = 2
 
@@ -40,11 +40,11 @@ resource "azurerm_container_group" "backend" {
 
     environment_variables = {
       OPENAI_API_KEY = azurerm_cognitive_account.openai.primary_access_key
-      AZURE_OPENAI_ENDPOINT = "https://openai-gbproto.openai.azure.com"
-      CHROMA_HOST = "backend.latest.gbprototype.com"
+      AZURE_OPENAI_ENDPOINT = "https://openai-hk.openai.azure.com"
+      CHROMA_HOST = "backend.latest.hktype.com"
       CHROMA_PORT = "80"
-      CHROMA_COLLECTION_NAME = "gbproto"
-      ALLOWED_HOSTS = join(",", [azurerm_public_ip.gbproto.domain_name_label, "backend.latest.gbprototype.com"])
+      CHROMA_COLLECTION_NAME = "hk"
+      ALLOWED_HOSTS = join(",", [azurerm_public_ip.hk.domain_name_label, "backend.latest.hktype.com"])
       EMBEDDING_MODEL = "text-embedding-ada-002"
     }
   }
@@ -52,7 +52,7 @@ resource "azurerm_container_group" "backend" {
 
 resource "azurerm_private_dns_a_record" "backend" {
   name                = "backend"
-  zone_name           = azurerm_private_dns_zone.gbprototype.name
+  zone_name           = azurerm_private_dns_zone.hktype.name
   resource_group_name = azurerm_resource_group.rg.name
   ttl                 = 300
   records             = [azurerm_container_group.backend.ip_address]

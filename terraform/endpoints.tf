@@ -14,7 +14,7 @@ resource "azurerm_private_endpoint" "openai_private_endpoint" {
 }
 
 resource "azurerm_private_dns_a_record" "openai" {
-  name                = "openai-gbproto"
+  name                = "openai-hk"
   zone_name           = azurerm_private_dns_zone.openai.name
   resource_group_name = azurerm_resource_group.rg.name
   ttl                 = 300

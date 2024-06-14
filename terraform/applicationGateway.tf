@@ -1,24 +1,24 @@
 locals {
-  backend_address_pool_name      = "gbproto-beap"
-  frontend_port_name             = "gbproto-feport"
-  frontend_ip_configuration_name = "gbproto-feip"
-  http_setting_name              = "gbproto-be-htst"
-  listener_name                  = "gbproto-httplstn"
-  request_routing_rule_name      = "gbproto-rqrt"
-  redirect_configuration_name    = "gbproto-rdrcfg"
+  backend_address_pool_name      = "hk-beap"
+  frontend_port_name             = "hk-feport"
+  frontend_ip_configuration_name = "hk-feip"
+  http_setting_name              = "hk-be-htst"
+  listener_name                  = "hk-httplstn"
+  request_routing_rule_name      = "hk-rqrt"
+  redirect_configuration_name    = "hk-rdrcfg"
 }
 
-resource "azurerm_public_ip" "gbproto" {
-  name                = "gbproto-pip"
+resource "azurerm_public_ip" "hk" {
+  name                = "hk-pip"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Static"
   sku                 = "Standard"
-  domain_name_label   = "gbprototype"
+  domain_name_label   = "HKtype"
 }
 
-resource "azurerm_application_gateway" "gbproto" {
-  name                = "gbproto-appgateway"
+resource "azurerm_application_gateway" "hk" {
+  name                = "hk-appgateway"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
@@ -40,12 +40,12 @@ resource "azurerm_application_gateway" "gbproto" {
 
   frontend_ip_configuration {
     name                 = local.frontend_ip_configuration_name
-    public_ip_address_id = azurerm_public_ip.gbproto.id
+    public_ip_address_id = azurerm_public_ip.hk.id
   }
 
   backend_address_pool {
     name = local.backend_address_pool_name
-    fqdns = ["backend.latest.gbprototype.com"]
+    fqdns = ["backend.latest.HKtype.com"]
   }
 
   backend_http_settings {
@@ -55,7 +55,7 @@ resource "azurerm_application_gateway" "gbproto" {
     protocol              = "Http"
     request_timeout       = 60
     probe_name            = "backend-probe"
-    host_name             = "backend.latest.gbprototype.com"
+    host_name             = "backend.latest.HKtype.com"
   }
 
   probe {
