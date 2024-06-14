@@ -39,7 +39,7 @@ resource "azurerm_container_group" "backend" {
     }
 
     environment_variables = {
-      OPENAI_API_KEY = azurerm_cognitive_account.openai.primary_access_key
+      OPENAI_API_KEY = "12345"
       AZURE_OPENAI_ENDPOINT = "https://openai-hk.openai.azure.com"
       CHROMA_HOST = "backend.latest.hktype.com"
       CHROMA_PORT = "80"
