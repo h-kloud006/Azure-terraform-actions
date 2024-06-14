@@ -1,7 +1,7 @@
 resource "azurerm_virtual_network" "vnet" {
   name                = "backend-net"
   location            = "eastus"
-  resource_group_name = "test-hr"
+  resource_group_name = "test-rg"
   address_space       = ["172.16.0.0/16"]
 }
 
