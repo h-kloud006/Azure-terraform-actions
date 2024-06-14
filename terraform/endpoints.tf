@@ -8,7 +8,7 @@ resource "azurerm_private_endpoint" "openai_private_endpoint" {
     private_service_connection {
         name                           = "openaiPrivateServiceConnection"
         is_manual_connection           = false
-        private_connection_resource_id = azurerm_cognitive_account.openai.id
+        private_connection_resource_id = "/subscriptions/a305ce37-5b0c-45c6-bc50-654b538b6a80/resourceGroups/test-rg/providers/Microsoft.CognitiveServices/accounts/testhrai"
         subresource_names              = ["account"]
     }
 }
