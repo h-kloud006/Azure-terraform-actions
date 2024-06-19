@@ -7,6 +7,11 @@ trigger: none
 
 pool:
   vmImage: ubuntu-latest
+ 
+resources:
+  environments:
+    - name: approval_environment
+      resourceType: environment  
 
 
 stages:
@@ -40,7 +45,9 @@ stages:
   - stage: Apply
     jobs:
     - job: Terraform_APPLY
-      displayName: Terraform APPLY      
+      displayName: Terraform APPLY    
+      environment: approval_environment  # Specify the environment for approval
+      environmentResourceName: approval_environment  
       steps:
         - task: TerraformTaskV2@2
           displayName: "Terraform : INIT"
