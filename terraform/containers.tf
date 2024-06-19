@@ -44,7 +44,7 @@ resource "azurerm_container_group" "backend" {
       CHROMA_HOST = "backend.latest.hktype.com"
       CHROMA_PORT = "80"
       CHROMA_COLLECTION_NAME = "hk"
-      ALLOWED_HOSTS = join(",", [hktype, "backend.latest.hktype.com"])
+      ALLOWED_HOSTS = join(",", ["hktype", "backend.latest.hktype.com"])
       EMBEDDING_MODEL = "text-embedding-ada-002"
     }
   }
