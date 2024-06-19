@@ -7,12 +7,6 @@ trigger: none
 
 pool:
   vmImage: ubuntu-latest
- 
-resources:
-  environments:
-    - name: approval_environment
-      resourceType: environment  
-
 
 stages:
   - stage: Validate
@@ -41,13 +35,15 @@ stages:
             commandOptions: "-out=$(System.DefaultWorkingDirectory)/terraform.tfplan -detailed-exitcode "
             environmentServiceNameAzureRM: $(backend_sp)
         
+  - stage: Waiting_Validation
+    jobs:
+      - deployment: Approval
+        environment: Approval
 
   - stage: Apply
     jobs:
     - job: Terraform_APPLY
-      displayName: Terraform APPLY    
-      environment: approval_environment  # Specify the environment for approval
-      environmentResourceName: approval_environment  
+      displayName: Terraform APPLY      
       steps:
         - task: TerraformTaskV2@2
           displayName: "Terraform : INIT"
