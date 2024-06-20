@@ -1,0 +1,48 @@
+trigger:
+- main  # Trigger on commits to the main branch
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: build
+  displayName: 'Build and Push Docker Image'
+  steps:
+  - checkout: self
+
+  - script: |
+      docker build -t $(ACR_URL)/dt-companion/backend:latest ./backend
+      docker push $(ACR_URL)/dt-companion/backend:latest
+    displayName: 'Build and Push Docker Image'
+    env:
+      ACR_URL: $(ACR_URL)
+
+- job: deploy
+  displayName: 'Deploy to Azure Container Instance'
+  dependsOn: build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+
+  steps:
+  - download: current
+    artifact: image
+    displayName: 'Download Docker Image Artifact'
+
+  - script: |
+      docker load < $(Pipeline.Workspace)/image/image.tar
+      docker login $(ACR_URL) -u $(ACR_USERNAME) -p $(ACR_PASSWORD)
+      docker push $(ACR_URL)/dt-companion/backend:latest
+    displayName: 'Load and Push Docker Image'
+    env:
+      ACR_URL: $(ACR_URL)
+      ACR_USERNAME: $(ACR_USERNAME)
+      ACR_PASSWORD: $(ACR_PASSWORD)
+
+  - task: AzureCLI@2
+    displayName: 'Restart Azure Container Instance'
+    inputs:
+      azureSubscription: $(AZURE_SUBSCRIPTION)
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az login --service-principal -u $(AZURE_CLIENT_ID) -p $(AZURE_CLIENT_SECRET) -t $(AZURE_TENANT_ID)
+        az container restart --name backend --resource-group latest
