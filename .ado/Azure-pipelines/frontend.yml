@@ -42,29 +42,32 @@ jobs:
       publishLocation: 'Container'
     displayName: 'Upload build artifact'
 
-- job: Deploy
+- deployment: Deploy
   displayName: 'Deploy Job'
-  dependsOn: Build
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   pool:
     vmImage: 'ubuntu-latest'
-  environment: 'production'  # Specify the environment with approval gates
+  environment: 'production'
+  dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
-  steps:
-  - download: current
-    artifact: gbprototype_frontend
-    displayName: 'Download build artifact'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - download: current
+          artifact: dtcompanion_frontend
+          displayName: 'Download build artifact'
 
-  - task: AzureCLI@2
-    inputs:
-      azureSubscription: $(SUBSCRIPTION_ID)
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
-      inlineScript: |
-        az login --service-principal -u $(AZURE_CLIENT_ID) -p $(AZURE_CLIENT_SECRET) --tenant $(AZURE_TENANT_ID)
-        az storage blob upload-batch -s $(System.DefaultWorkingDirectory)/gbprototype_frontend -d '$web' --account-name gbpfrontend --overwrite
-    displayName: 'Upload to Azure Blob Storage'
-    env:
-      AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
-      AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
-      AZURE_TENANT_ID: $(AZURE_TENANT_ID)
+        - task: AzureCLI@2
+          inputs:
+            azureSubscription: 'your-azure-subscription-id'
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              az login --service-principal -u $(AZURE_CLIENT_ID) -p $(AZURE_CLIENT_SECRET) --tenant $(AZURE_TENANT_ID)
+              az storage blob upload-batch -s $(System.DefaultWorkingDirectory)/dtcompanion_frontend -d '$web' --account-name testhrsa --overwrite
+          displayName: 'Upload to Azure Blob Storage'
+          env:
+            AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
+            AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
+            AZURE_TENANT_ID: $(AZURE_TENANT_ID)
