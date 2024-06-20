@@ -60,7 +60,7 @@ jobs:
 
         - task: AzureCLI@2
           inputs:
-            azureSubscription: 'your-azure-subscription-id'
+            azureSubscription: $(SUBSCRIPTION_ID)
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
