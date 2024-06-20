@@ -1,0 +1,128 @@
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: translateX(-10%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+}
+
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chat-message {
+
+    &-dtc,
+    &-user {
+        display: flex;
+        width: 50%;
+        margin-top: 1.5rem;
+    }
+
+    &-user {
+        flex-direction: row-reverse;
+
+        .chat-message-wrapper {
+            margin-right: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .chat-message-text {
+            text-align: right;
+        }
+    }
+
+    &-avatar {
+        opacity: 0;
+        animation: appear 0.3s ease-in-out forwards;
+        animation-delay: 0.3s;
+
+        img {
+            height: 2.5rem;
+            width: 2.5rem;
+            border-radius: 50%;
+        }
+    }
+
+    &-wrapper {
+        margin-left: 1rem;
+    }
+
+    &-author {
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        animation: appear 0.3s ease-in-out forwards;
+        animation-delay: 0.3s;
+    }
+
+    &-text {
+        margin-top: 0.3rem;
+        opacity: 0;
+        animation: appear 0.3s ease-in-out forwards;
+        animation-delay: 0.45s;
+    }
+
+    &-sources {
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        margin-top: .5rem;
+        margin-right: 4px;
+        color: #767a7c;
+    }
+
+    &-source {
+        cursor: pointer;
+        padding: 3px 6px;
+        border: 1px solid #767a7c;
+        border-radius: 6px;
+        margin: 0 4px;
+        opacity: 0;
+        animation: appear 0.3s ease-in-out forwards;
+        animation-delay: 0.45s;
+    }
+
+    &-categories {
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        margin-top: .5rem;
+        margin-right: 4px;
+        color: #767a7c;
+
+        .selected,
+        .inactive {
+            cursor: default;
+        }
+
+        .inactive {
+            background-color: #f0f0f0;
+            border-color: #d0d0d0;
+        }
+    }
+
+    &-category {
+        cursor: pointer;
+        padding: 3px 6px;
+        border: 1px solid #767a7c;
+        border-radius: 6px;
+        margin: 0 4px;
+        opacity: 0;
+        animation: appear 0.3s ease-in-out forwards;
+        animation-delay: 0.45s;
+    }
+}
+
+.chat-message:last-child {
+    margin-bottom: 2rem;
+}
