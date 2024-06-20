@@ -50,7 +50,7 @@ jobs:
 - deployment: Deploy
   displayName: 'Deploy Job'
   dependsOn: Build
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   environment: 'production'
   strategy:
     runOnce:
