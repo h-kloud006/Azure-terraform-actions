@@ -38,7 +38,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: 'frontend/dist'
-      artifactName: 'dtcompanion_frontend'
+      artifactName: 'gbprototype_frontend'
       publishLocation: 'Container'
     displayName: 'Upload build artifact'
 
@@ -52,17 +52,17 @@ jobs:
 
   steps:
   - download: current
-    artifact: dtcompanion_frontend
+    artifact: gbprototype_frontend
     displayName: 'Download build artifact'
 
   - task: AzureCLI@2
     inputs:
-      azureSubscription: 'your-azure-subscription-id'
+      azureSubscription: $(SUBSCRIPTION_ID)
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
         az login --service-principal -u $(AZURE_CLIENT_ID) -p $(AZURE_CLIENT_SECRET) --tenant $(AZURE_TENANT_ID)
-        az storage blob upload-batch -s $(System.DefaultWorkingDirectory)/dtcompanion_frontend -d '$web' --account-name dtcfrontend --overwrite
+        az storage blob upload-batch -s $(System.DefaultWorkingDirectory)/gbprototype_frontend -d '$web' --account-name gbpfrontend --overwrite
     displayName: 'Upload to Azure Blob Storage'
     env:
       AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
