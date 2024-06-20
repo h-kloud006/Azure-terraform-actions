@@ -24,6 +24,11 @@ jobs:
     displayName: 'Install Node.js'
 
   - script: |
+      npm install
+    displayName: 'Update lock file'
+    workingDirectory: frontend
+
+  - script: |
       npm ci
     displayName: 'Install dependencies'
     workingDirectory: frontend
