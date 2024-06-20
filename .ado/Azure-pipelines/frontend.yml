@@ -60,6 +60,11 @@ jobs:
           artifact: gbprototype_frontend
           displayName: 'Download build artifact'
 
+        - script: |
+            echo "Listing downloaded artifacts directory contents:"
+            ls -la $(Pipeline.Workspace)/gbprototype_frontend
+          displayName: 'Log artifact directory contents'
+
         - task: AzureCLI@2
           inputs:
             azureSubscription: $(SUBSCRIPTION_ID)
