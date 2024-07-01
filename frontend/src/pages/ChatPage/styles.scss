@@ -1,0 +1,107 @@
+.chat-page {
+
+    &-messages {
+        min-height: 74vh;
+    }
+
+    &-prompts {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 20vh;
+
+        &-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 0 18rem;
+        }
+
+        &-prompt {
+            width: 30%;
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            margin: 2rem 1rem;
+            padding: 8px 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+
+            &-text {
+                color: #757575;
+                text-align: center;
+            }
+        }
+
+        &-prompt:hover {
+            background-color: #f5f5f5;
+            cursor: pointer;
+            border: 1px solid transparent;
+            box-shadow: rgba(0, 0, 0, .1) 0 1px 1px;
+            transition: all 0.3s ease;
+        }
+    }
+
+    &-input {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        width: 45%;
+        margin: auto;
+
+        &-field {
+            all: unset;
+            width: 100%;
+            border: 1px solid #e0e0e0;
+            padding: 0.8rem 2.4rem 0.8rem 1.2rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            color: #757575;
+            transition: all 0.2s ease;
+        }
+
+        &-field:hover {
+            border: 1px solid #757575;
+            box-shadow: rgba(0, 0, 0, .1) 0 1px 1px;
+            transition: all 0.2s ease;
+        }
+
+        &-field:focus {
+            border: 1px solid #757575;
+            box-shadow: rgba(0, 0, 0, .1) 0 1px 1px;
+        }
+
+        &-field:disabled:hover {
+            border: 1px solid #e0e0e0;
+            box-shadow: none;
+        }
+
+        &-send-btn {
+            all: unset;
+            position: absolute;
+            right: 1px;
+            top: 3.5px;
+            border: none;
+            padding: .5rem;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        &-send-icon {
+            stroke: #e0e0e0;
+            width: 25px;
+            height: 25px;
+            transition: stroke 0.2s ease;
+        }
+
+        &-field:hover~&-send-btn .chat-page-input-send-icon,
+        &-field:focus~&-send-btn .chat-page-input-send-icon {
+            stroke: #757575;
+        }
+
+        &-field:disabled:hover~&-send-btn .chat-page-input-send-icon {
+            stroke: #e0e0e0;
+        }
+    }
+}
